@@ -1,0 +1,14 @@
+{
+  "name": "fewkit",
+  "private": true,
+  "description": "The lean Claude Code bundle: one marketplace for CodeKickoff, Fewturns and Wavecheck. Collects nothing.",
+  "license": "MIT",
+  "type": "module",
+  "engines": {
+    "node": ">=20"
+  },
+  "scripts": {
+    "test": "node --test tests/repo.test.mjs",
+    "check": "node --test tests/repo.test.mjs"
+  }
+}

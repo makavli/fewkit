@@ -2,11 +2,11 @@
 
 ## What is in scope
 
-Fewkit is one JSON file, `.claude-plugin/marketplace.json`, and its README. The file tells Claude Code where to install two plugins from: `makavli/codekickoff` and `makavli/fewturns` on GitHub. Fewkit ships no code of its own.
+Fewkit is one marketplace file, `.claude-plugin/marketplace.json`, its README, and one plugin of its own: Wavecheck, in `plugins/wavecheck/`. The marketplace file tells Claude Code where to install three plugins from: `makavli/codekickoff` and `makavli/fewturns` on GitHub, each pinned to a release tag (`ref`), and `plugins/wavecheck` in this repository. Wavecheck is one skill, text that Claude reads: no script, no hook, no server.
 
-A security problem here is anything that could make installing from Fewkit fetch something other than those two repositories: a source that points elsewhere, a plugin the README does not name, or an install step in the README that does more than it says.
+A security problem here is anything that could make installing from Fewkit fetch something other than those three sources: a source that points elsewhere or follows a branch instead of a release tag, a plugin the README does not name, or an install step in the README that does more than it says. In Wavecheck, it is anything in its text that could lead the agent to change the target, run its code, send a helper that can write, or carry data from the target to the web.
 
-A problem in a tool's own files belongs to that tool: report it to [CodeKickoff](https://github.com/makavli/codekickoff/security) or [Fewturns](https://github.com/makavli/fewturns/security).
+A problem in another tool's own files belongs to that tool: report it to [CodeKickoff](https://github.com/makavli/codekickoff/security) or [Fewturns](https://github.com/makavli/fewturns/security).
 
 ## Supported versions
 
@@ -18,4 +18,4 @@ Please do not open a public issue. Report it privately through GitHub's [private
 
 ## Installing safely
 
-Add Fewkit only as `makavli/fewkit`. Its marketplace file lists exactly two sources, `makavli/codekickoff` and `makavli/fewturns`; a copy that lists anything else is not this project.
+Add Fewkit only as `makavli/fewkit`. Its marketplace file lists exactly three sources, `makavli/codekickoff`, `makavli/fewturns` and `./plugins/wavecheck`; a copy that lists anything else is not this project.
