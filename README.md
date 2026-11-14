@@ -7,6 +7,8 @@
 
 **One front door to a lean Claude Code setup.** Four small tools that share one way of working: set up well on day one, keep every request light after that, check deeply before a release, and see where each project stands without opening a session.
 
+**New: [Wavecheck](#wavecheck).** The deep check before a release: waves of read-only helpers, a critic after each wave, two verifiers for each lead, and a report of verified findings only. It offers itself at the moments that deserve it and never starts without your yes.
+
 Free, MIT, nothing collected. CodeKickoff, Fewturns and Laneboard live in their own repositories with their own releases; Wavecheck lives here. Fewkit lists them and explains how they fit.
 
 **Fewturns alone, or the whole kit?** Fewturns on its own is the whole optimization: less carried on every request, fewer requests per task. For that alone, install it from [its own repository](https://github.com/makavli/fewturns). Fewkit is the bundle, and its Wavecheck spends requests on purpose, for the moments that deserve a deep check.
@@ -33,7 +35,7 @@ Or inside Claude Code: `/plugin marketplace add makavli/fewkit`, then `/plugin i
 
 **One marketplace per tool.** If you already added `makavli/codekickoff` or `makavli/fewturns` as a marketplace, keep using it for that tool: the same plugin from two marketplaces installs twice. To switch, uninstall it there first (`claude plugin uninstall fewturns@fewturns`), then install it from Fewkit.
 
-**To update:** `claude plugin marketplace update fewkit`, then `claude plugin update codekickoff@fewkit`, `claude plugin update fewturns@fewkit` and `claude plugin update wavecheck@fewkit`. Fewkit pins each tool to a release tag and its commit, never to a branch: a new release reaches you once Fewkit moves its pin to it.
+**To update:** `claude plugin marketplace update fewkit`, then `claude plugin update codekickoff@fewkit`, `claude plugin update fewturns@fewkit` and `claude plugin update wavecheck@fewkit`. Fewkit pins CodeKickoff and Fewturns to a release tag and its commit, never to a branch: a new release reaches you once Fewkit moves its pin to it. Wavecheck lives here: an update reaches you when its version goes up.
 
 **Laneboard** is a Windows app, not a plugin. Download `Laneboard-<version>-win-x64.zip` from its [latest release](https://github.com/makavli/laneboard/releases/latest), unzip it anywhere and run `Laneboard.exe`: one file for Windows 10 or 11 (x64), nothing to install. It needs [Git](https://git-scm.com); a signed-in [GitHub CLI](https://cli.github.com) adds pull requests and checks. The release notes give the zip's SHA-256: compare it with `Get-FileHash` before you unzip. The file is not signed, so SmartScreen may warn on the first run: **More info**, then **Run anyway**.
 
@@ -73,11 +75,12 @@ They share one workflow, so each picks up where the other leaves off:
 - **One block of working rules.** CodeKickoff installs Fewturns' rules under Fewturns' own markers in your `CLAUDE.md`. With both installed you get the block once; `/fewturns check` says whether it is the latest, and `/fewturns rules` updates it.
 - **The same four helpers.** CodeKickoff and Fewturns offer the same lean helpers (`scout`, `web-scout`, `worker`, `reviewer`), and neither writes over a helper file that is already there. Wavecheck sends only the three that cannot write: `scout`, `web-scout` and `reviewer`.
 - **A handoff per project.** `HANDOFF.md` holds the state now; a new session reads it first. At a safe point its first line reads `SAFE POINT <date>: <where the work stopped>`, and the session offers a fresh start when that is cheaper. Laneboard reads that line to tell you a project is waiting for you.
+- **A deep check before it ships.** At a release, before a repository goes public, or after work that touched a trust boundary, the session offers Wavecheck with one choice marked Recommended for your change and your plan. It is not on the bench: it is the check you run before a release.
 - **Every change waits for your yes.** No hooks, no background process in the plugins, no account, no key.
 
 ## Trust
 
-Each tool says what it reads and writes in its own README and `SECURITY.md`. Fewkit itself is one JSON file, this page, its pictures and Wavecheck, one skill of plain text with no script or hook. Installing CodeKickoff or Fewturns from it runs the same code as installing them from their own repositories.
+Each tool says what it reads and writes in its own README and `SECURITY.md`. Fewkit itself is one JSON file, this page, its pictures and Wavecheck, one skill of plain text with no script or hook. Its tests run on every pull request, and main takes a merge only once they pass. Installing CodeKickoff or Fewturns from it runs the same code as installing them from their own repositories.
 
 Fewkit is a community project. It is not made, endorsed or supported by Anthropic. Claude and Claude Code are Anthropic's trademarks, named here only to say what this works with.
 
