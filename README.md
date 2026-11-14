@@ -33,7 +33,7 @@ Or inside Claude Code: `/plugin marketplace add makavli/fewkit`, then `/plugin i
 
 **One marketplace per tool.** If you already added `makavli/codekickoff` or `makavli/fewturns` as a marketplace, keep using it for that tool: the same plugin from two marketplaces installs twice. To switch, uninstall it there first (`claude plugin uninstall fewturns@fewturns`), then install it from Fewkit.
 
-**To update:** `claude plugin marketplace update fewkit`, then `claude plugin update codekickoff@fewkit`, `claude plugin update fewturns@fewkit` and `claude plugin update wavecheck@fewkit`. Fewkit pins each tool to a release tag, never to a branch: a new release reaches you once Fewkit moves its pin to it.
+**To update:** `claude plugin marketplace update fewkit`, then `claude plugin update codekickoff@fewkit`, `claude plugin update fewturns@fewkit` and `claude plugin update wavecheck@fewkit`. Fewkit pins each tool to a release tag and its commit, never to a branch: a new release reaches you once Fewkit moves its pin to it.
 
 **Laneboard** is a Windows app, not a plugin. Download `Laneboard-<version>-win-x64.zip` from its [latest release](https://github.com/makavli/laneboard/releases/latest), unzip it anywhere and run `Laneboard.exe`: one file for Windows 10 or 11 (x64), nothing to install. It needs [Git](https://git-scm.com); a signed-in [GitHub CLI](https://cli.github.com) adds pull requests and checks. The release notes give the zip's SHA-256: compare it with `Get-FileHash` before you unzip. The file is not signed, so SmartScreen may warn on the first run: **More info**, then **Run anyway**.
 

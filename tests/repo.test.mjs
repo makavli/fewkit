@@ -36,7 +36,7 @@ test('the marketplace lists each plugin once, from our repositories or this one'
       const { ref, sha, ...rest } = p.source;
       assert.deepEqual(rest, { source: 'github', repo: `makavli/${p.name}` }, `${p.name}: an unexpected source`);
       assert.match(ref ?? '', /^v\d+\.\d+\.\d+$/, `${p.name}: pin a release tag, never a branch`);
-      if (sha !== undefined) assert.match(sha, /^[0-9a-f]{40}$/, `${p.name}: a sha is a full commit hash`);
+      assert.match(sha ?? '', /^[0-9a-f]{40}$/, `${p.name}: pin the tag's commit as a full sha`);
     }
     assert.ok(text('README.md').includes(`install ${p.name}@fewkit`), `the README does not install ${p.name}`);
     assert.ok(text('SECURITY.md').includes(typeof p.source === 'string' ? p.source : p.source.repo), `SECURITY.md does not name ${p.name}'s source`);
