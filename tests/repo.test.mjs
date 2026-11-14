@@ -65,7 +65,10 @@ test('each local plugin is one skill of text: no hooks, servers or scripts', () 
 test('a local plugin that changed since main has a higher version', (t) => {
   const base = 'origin/main';
   const git = (...args) => execFileSync('git', args, { cwd: root, encoding: 'utf8', stdio: ['ignore', 'pipe', 'ignore'] });
-  try { git('rev-parse', '--verify', '-q', base); } catch { return t.skip(`no ${base} to compare with`); }
+  try { git('rev-parse', '--verify', '-q', base); } catch {
+    if (process.env.CI) throw new Error(`no ${base} to compare with: check out with fetch-depth 0`);
+    return t.skip(`no ${base} to compare with`);
+  }
   const num = (v) => v.split('.').map(Number);
   for (const p of local) {
     const dir = p.source.slice(2);
@@ -143,9 +146,19 @@ test('the pictures are only pictures: no script or outside address in an SVG, no
   }
 });
 
+test('the workflows pin every action to a commit and start with a read-only token', () => {
+  const flows = all.filter((f) => f.startsWith('.github/workflows/'));
+  assert.ok(flows.length > 0);
+  for (const f of flows) {
+    for (const m of text(f).matchAll(/uses:\s*(\S+)/g)) assert.match(m[1], /^[\w.-]+\/[\w.-]+@[0-9a-f]{40}$/, `${f}: pin ${m[1]} to a full commit sha`);
+    assert.match(text(f), /^permissions:(?: \{\}|\n {2}contents: read)\n(?:\n|\S)/m, `${f}: the top-level token must be read-only`);
+    assert.ok(!/pull_request_target/.test(text(f)), `${f}: pull_request_target would run a fork's code with a write token`);
+  }
+});
+
 test('only what a marketplace needs ships: text, the pictures, nothing over 1 MB', () => {
   for (const file of all) {
-    assert.match(file, /\.(md|mjs|json|svg|gif)$|^(LICENSE|\.gitattributes)$/, `unexpected file type: ${file}`);
+    assert.match(file, /\.(md|mjs|json|svg|gif)$|^(LICENSE|\.gitattributes)$|^\.github\/workflows\/[a-z-]+\.yml$/, `unexpected file type: ${file}`);
     assert.ok(statSync(join(root, file)).size < 1_000_000, `${file} is too large`);
   }
 });
