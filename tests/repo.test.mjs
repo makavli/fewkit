@@ -61,6 +61,23 @@ test('each local plugin is one skill of text: no hooks, servers or scripts', () 
   }
 });
 
+// Fewkit has no releases: a merge to main is a local plugin's release, and installed copies update only on a higher version.
+test('a local plugin that changed since main has a higher version', (t) => {
+  const base = 'origin/main';
+  const git = (...args) => execFileSync('git', args, { cwd: root, encoding: 'utf8', stdio: ['ignore', 'pipe', 'ignore'] });
+  try { git('rev-parse', '--verify', '-q', base); } catch { return t.skip(`no ${base} to compare with`); }
+  const num = (v) => v.split('.').map(Number);
+  for (const p of local) {
+    const dir = p.source.slice(2);
+    if (!git('diff', '--name-only', base, '--', dir).trim()) continue;
+    let before;
+    try { before = JSON.parse(git('show', `${base}:${dir}/.claude-plugin/plugin.json`)).version; } catch { continue; } // new on this branch: nobody has it installed
+    const [now, was] = [num(json(`${dir}/.claude-plugin/plugin.json`).version), num(before)];
+    const i = now.findIndex((n, k) => n !== was[k]);
+    assert.ok(i >= 0 && now[i] > was[i], `${p.name} changed since ${base}: raise its version above ${before} in ${dir}/.claude-plugin/plugin.json`);
+  }
+});
+
 test('Wavecheck offers before it runs, has both runs, and sends only helpers that cannot write', () => {
   const page = text('plugins/wavecheck/skills/wavecheck/SKILL.md');
   const section = (name) => page.split(`\n## ${name}\n`)[1]?.split('\n## ')[0] ?? '';
