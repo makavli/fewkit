@@ -55,7 +55,8 @@ test('each local plugin is one skill of text: no hooks, servers or scripts', () 
     assert.equal(skill.name, p.name);
     assert.ok(skill.description.length <= 400, `${p.name}: the description is ${skill.description.length} characters`);
     // A closed list: a manifest key, a header field or an extra file could bring hooks, servers or agents.
-    assert.deepEqual(all.filter((f) => f.startsWith(`${dir}/`)).sort(), [`${dir}/.claude-plugin/plugin.json`, `${dir}/skills/${p.name}/SKILL.md`], `${p.name} ships more than one skill`);
+    assert.deepEqual(all.filter((f) => f.startsWith(`${dir}/`)).sort(), [`${dir}/.claude-plugin/plugin.json`, `${dir}/README.md`, `${dir}/skills/${p.name}/SKILL.md`], `${p.name} ships more than one skill and its README`);
+    assert.ok(text(`${dir}/README.md`).split(/\s+/).length >= 40, `${p.name}: Anthropic's directory wants a README of at least 40 words in the plugin folder`);
     assert.deepEqual(Object.keys(plugin).filter((k) => !['name', 'version', 'description', 'author', 'homepage', 'repository', 'license', 'keywords'].includes(k)), [], `${p.name}: plugin.json has a key that loads something`);
     assert.deepEqual(Object.keys(skill).filter((k) => !['name', 'description', 'argument-hint', 'license'].includes(k)), [], `${p.name}: SKILL.md has a header field that loads something`);
   }
@@ -72,7 +73,8 @@ test('a local plugin that changed since main has a higher version', (t) => {
   const num = (v) => v.split('.').map(Number);
   for (const p of local) {
     const dir = p.source.slice(2);
-    if (!git('diff', '--name-only', base, '--', dir).trim()) continue;
+    // A new file is not in the diff until it is committed: count untracked ones too.
+    if (!(git('diff', '--name-only', base, '--', dir) + git('ls-files', '--others', '--exclude-standard', '--', dir)).trim()) continue;
     let before;
     try { before = JSON.parse(git('show', `${base}:${dir}/.claude-plugin/plugin.json`)).version; } catch { continue; } // new on this branch: nobody has it installed
     const [now, was] = [num(json(`${dir}/.claude-plugin/plugin.json`).version), num(before)];
