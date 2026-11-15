@@ -1,6 +1,6 @@
 {
   "name": "wavecheck",
-  "version": "1.0.1",
+  "version": "1.0.2",
   "description": "A deep check in waves before a release: read-only helpers, a critic after each wave, two verifiers per lead, verified findings only. Spends requests on purpose; lite for smaller plans. One skill, no hooks, nothing collected.",
   "author": {
     "name": "makavli",
