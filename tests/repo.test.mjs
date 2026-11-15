@@ -55,7 +55,8 @@ test('each local plugin is one skill of text: no hooks, servers or scripts', () 
     assert.equal(skill.name, p.name);
     assert.ok(skill.description.length <= 400, `${p.name}: the description is ${skill.description.length} characters`);
     // A closed list: a manifest key, a header field or an extra file could bring hooks, servers or agents.
-    assert.deepEqual(all.filter((f) => f.startsWith(`${dir}/`)).sort(), [`${dir}/.claude-plugin/plugin.json`, `${dir}/README.md`, `${dir}/skills/${p.name}/SKILL.md`], `${p.name} ships more than one skill and its README`);
+    // The icon is the directory's listing picture, checked with the other pictures below.
+    assert.deepEqual(all.filter((f) => f.startsWith(`${dir}/`)).sort(), [`${dir}/.claude-plugin/icon.png`, `${dir}/.claude-plugin/plugin.json`, `${dir}/README.md`, `${dir}/skills/${p.name}/SKILL.md`], `${p.name} ships more than one skill, its README and its icon`);
     assert.ok(text(`${dir}/README.md`).split(/\s+/).length >= 40, `${p.name}: Anthropic's directory wants a README of at least 40 words in the plugin folder`);
     assert.deepEqual(Object.keys(plugin).filter((k) => !['name', 'version', 'description', 'author', 'homepage', 'repository', 'license', 'keywords'].includes(k)), [], `${p.name}: plugin.json has a key that loads something`);
     assert.deepEqual(Object.keys(skill).filter((k) => !['name', 'description', 'argument-hint', 'license'].includes(k)), [], `${p.name}: SKILL.md has a header field that loads something`);
@@ -117,12 +118,26 @@ test('relative links and images resolve', () => {
 
 test('no machine left a trace: no home folders, addresses, e-mails or keys', () => {
   const traces = /[A-Z]:[\\/]Users[\\/]|\/home\/[a-z]|\/Users\/[a-z]|AppData|[\w.+-]+@[\w-]+\.[a-z]{2,}|\b\d{1,3}(\.\d{1,3}){3}\b|gh[pos]_[A-Za-z0-9]{20,}|BEGIN [A-Z ]*PRIVATE KEY/;
-  for (const file of all.filter((f) => !/\.gif$/.test(f) && f !== 'tests/repo.test.mjs')) { // this file holds the pattern itself
+  for (const file of all.filter((f) => !/\.(gif|png)$/.test(f) && f !== 'tests/repo.test.mjs')) { // this file holds the pattern itself
     for (const line of text(file).split('\n')) assert.ok(!traces.test(line), `${file}: ${line.trim().slice(0, 120)}`);
   }
 });
 
-test('the pictures are only pictures: no script or outside address in an SVG, no text block in a GIF', () => {
+test('the pictures are only pictures: no script or outside address in an SVG, no text block in a GIF or PNG', () => {
+  for (const file of all.filter((f) => f.endsWith('.png'))) {
+    const b = readFileSync(join(root, file));
+    assert.equal(b.subarray(0, 8).toString('hex'), '89504e470d0a1a0a', `${file} is not a PNG`);
+    const [w, h] = [b.readUInt32BE(16), b.readUInt32BE(20)];
+    assert.ok(w === h && w >= 512 && w <= 2048, `${file} is ${w}x${h}: the directory wants a square of 512 to 2048 px`);
+    // Only image chunks: anything else (tIME, iCCP, tEXt, an editor's private chunk) could carry data.
+    const image = ['IHDR', 'PLTE', 'IDAT', 'IEND', 'sRGB', 'gAMA', 'cHRM', 'pHYs', 'tRNS', 'sBIT', 'bKGD'];
+    const types = [];
+    let i = 8;
+    while (i < b.length) { types.push(b.toString('latin1', i + 4, i + 8)); i += 12 + b.readUInt32BE(i); }
+    assert.equal(i, b.length, `${file} has bytes past its last chunk`);
+    assert.ok(types[0] === 'IHDR' && types.at(-1) === 'IEND', `${file} does not run from IHDR to IEND`);
+    assert.deepEqual(types.filter((t) => !image.includes(t)), [], `${file} carries a chunk that is not image data`);
+  }
   for (const file of all.filter((f) => f.endsWith('.svg'))) {
     assert.ok(!/<script|\son[a-z]+\s*=|javascript:|<foreignObject|\bhref\s*=|url\(\s*['"]?(?!#)|@import/i.test(text(file)), `${file} holds active or outside content`);
   }
@@ -160,7 +175,7 @@ test('the workflows pin every action to a commit and start with a read-only toke
 
 test('only what a marketplace needs ships: text, the pictures, nothing over 1 MB', () => {
   for (const file of all) {
-    assert.match(file, /\.(md|mjs|json|svg|gif)$|^(LICENSE|\.gitattributes)$|^\.github\/workflows\/[a-z-]+\.yml$/, `unexpected file type: ${file}`);
+    assert.match(file, /\.(md|mjs|json|svg|gif)$|^plugins\/[a-z-]+\/\.claude-plugin\/icon\.png$|^(LICENSE|\.gitattributes)$|^\.github\/workflows\/[a-z-]+\.yml$/, `unexpected file type: ${file}`);
     assert.ok(statSync(join(root, file)).size < 1_000_000, `${file} is too large`);
   }
 });
