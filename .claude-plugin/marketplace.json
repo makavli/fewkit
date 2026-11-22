@@ -10,13 +10,13 @@
     {
       "name": "codekickoff",
       "description": "First setup for Claude Code newcomers, sized to your plan. One skill, no hooks, nothing collected.",
-      "source": { "source": "github", "repo": "makavli/codekickoff", "ref": "v1.0.9", "sha": "9b5f57a194dca0ca844eddfbc79a22c081258654" },
+      "source": { "source": "github", "repo": "makavli/codekickoff", "ref": "v1.1.0", "sha": "ca00e6392545487dbdb3ef8cd54807873c294853" },
       "category": "productivity"
     },
     {
       "name": "fewturns",
       "description": "Trims what every Claude Code request carries and the requests a task takes. One skill, no hooks, nothing collected.",
-      "source": { "source": "github", "repo": "makavli/fewturns", "ref": "v1.5.10", "sha": "fa5bba7799d5bececc479794e5614ba4bfe77a7a" },
+      "source": { "source": "github", "repo": "makavli/fewturns", "ref": "v1.6.0", "sha": "54998c01b41cc61fb3da7edaf88f7e551b91db51" },
       "category": "productivity"
     },
     {
@@ -28,7 +28,7 @@
     {
       "name": "fullburn",
       "description": "A swarm against a deadline: many helper agents at once, each in its own git worktree, merged and checked in waves, with a usage watch. Spends usage very fast, on purpose; Pro runs it lite. Two skills, no hooks, nothing collected.",
-      "source": { "source": "github", "repo": "makavli/fullburn", "ref": "v1.0.0", "sha": "cb29d22fe392b41a76fdd1d759227fe6737ac863" },
+      "source": { "source": "github", "repo": "makavli/fullburn", "ref": "v1.1.0", "sha": "9f72e63e86a9ed66e29941e36d65f96c2d395cf0" },
       "category": "productivity"
     }
   ]
