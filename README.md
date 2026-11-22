@@ -5,11 +5,11 @@
   <img src="assets/hero-light.svg" width="880" alt="Fewkit: one front door to a lean Claude Code setup. A relay baton rests on two roller cradles: an orange cap (CodeKickoff), three white grip rings that get shorter (Fewturns), and a blue-to-violet tube (Laneboard), engraved FEWKIT.">
 </picture>
 
-**One front door to a lean Claude Code setup.** Four small tools that share one way of working: set up well on day one, keep every request light after that, check deeply before a release, and see where each project stands without opening a session.
+**One front door to a lean Claude Code setup.** Five small tools that share one way of working: set up well on day one, keep every request light after that, check deeply before a release, go wide when a deadline is close, and see where each project stands without opening a session.
 
 **New: [Wavecheck](#wavecheck).** The deep check before a release: waves of read-only helpers, a critic after each wave, two verifiers for each lead, and a report of verified findings only. It offers itself at the moments that deserve it and never starts without your yes.
 
-Free, MIT, nothing collected. CodeKickoff, Fewturns and Laneboard live in their own repositories with their own releases; Wavecheck lives here. Fewkit lists them and explains how they fit.
+Free, MIT, nothing collected. CodeKickoff, Fewturns, Fullburn and Laneboard live in their own repositories with their own releases; Wavecheck lives here. Fewkit lists them and explains how they fit.
 
 **Fewturns alone, or the whole kit?** Fewturns on its own is the whole optimization: less carried on every request, fewer requests per task. For that alone, install it from [its own repository](https://github.com/makavli/fewturns). Fewkit is the bundle, and its Wavecheck spends requests on purpose, for the moments that deserve a deep check.
 
@@ -18,6 +18,7 @@ Free, MIT, nothing collected. CodeKickoff, Fewturns and Laneboard live in their 
 | [CodeKickoff](https://github.com/makavli/codekickoff) | Day one | Sets the model and effort for the plan you pay for, adds four lean helpers, writes the working rules, a `HANDOFF.md` per project, and an optional safe git workflow. `/codekickoff` |
 | [Fewturns](https://github.com/makavli/fewturns) | Every day | Weighs what every request carries and trims it with your yes, names what deserves a second look, and keeps the working rules current. `/fewturns` |
 | [Wavecheck](#wavecheck) | Before a release | Checks a project in waves of read-only helpers, with a critic after each wave and two verifiers for each lead, and reports only what was verified. It offers itself at a release; **it spends many requests**. `/wavecheck` |
+| [Fullburn](https://github.com/makavli/fullburn) | Against a deadline | Runs many helper agents at once, each in its own git worktree, then merges and checks their work in waves; a usage watch warns before a limit. Pro runs it lite; **it spends usage very fast, on purpose**. `/fullburn` |
 | [Laneboard](https://github.com/makavli/laneboard) | All the time | A Windows tray app: every local project at a glance, with a notice when a session stops at a safe point or a check fails. [Download](https://github.com/makavli/laneboard/releases/latest) |
 
 ## Install
@@ -29,13 +30,14 @@ claude plugin marketplace add makavli/fewkit
 claude plugin install codekickoff@fewkit
 claude plugin install fewturns@fewkit
 claude plugin install wavecheck@fewkit
+claude plugin install fullburn@fewkit
 ```
 
-Or inside Claude Code: `/plugin marketplace add makavli/fewkit`, then `/plugin install codekickoff@fewkit`, `/plugin install fewturns@fewkit` and `/plugin install wavecheck@fewkit`. Restart Claude Code, then run `/codekickoff` first and `/fewturns` after it. Wavecheck needs no setup: it offers itself when a check is due, and uses the lean helpers that CodeKickoff or Fewturns install.
+Or inside Claude Code: `/plugin marketplace add makavli/fewkit`, then `/plugin install codekickoff@fewkit`, `/plugin install fewturns@fewkit`, `/plugin install wavecheck@fewkit` and `/plugin install fullburn@fewkit`. Restart Claude Code, then run `/codekickoff` first and `/fewturns` after it. Wavecheck needs no setup: it offers itself when a check is due, and uses the lean helpers that CodeKickoff or Fewturns install.
 
-**One marketplace per tool.** If you already added `makavli/codekickoff` or `makavli/fewturns` as a marketplace, keep using it for that tool: the same plugin from two marketplaces installs twice. To switch, uninstall it there first (`claude plugin uninstall fewturns@fewturns`), then install it from Fewkit.
+**One marketplace per tool.** If you already added `makavli/codekickoff`, `makavli/fewturns` or `makavli/fullburn` as a marketplace, keep using it for that tool: the same plugin from two marketplaces installs twice. To switch, uninstall it there first (`claude plugin uninstall fewturns@fewturns`), then install it from Fewkit.
 
-**To update:** `claude plugin marketplace update fewkit`, then `claude plugin update codekickoff@fewkit`, `claude plugin update fewturns@fewkit` and `claude plugin update wavecheck@fewkit`. Fewkit pins CodeKickoff and Fewturns to a release tag and its commit, never to a branch: a new release reaches you once Fewkit moves its pin to it. Wavecheck lives here: an update reaches you when its version goes up.
+**To update:** `claude plugin marketplace update fewkit`, then `claude plugin update codekickoff@fewkit`, `claude plugin update fewturns@fewkit`, `claude plugin update wavecheck@fewkit` and `claude plugin update fullburn@fewkit`. Fewkit pins CodeKickoff, Fewturns and Fullburn to a release tag and its commit, never to a branch: a new release reaches you once Fewkit moves its pin to it. Wavecheck lives here: an update reaches you when its version goes up.
 
 **Laneboard** is a Windows app, not a plugin. Download `Laneboard-<version>-win-x64.zip` from its [latest release](https://github.com/makavli/laneboard/releases/latest), unzip it anywhere and run `Laneboard.exe`: one file for Windows 10 or 11 (x64), nothing to install. It needs [Git](https://git-scm.com); a signed-in [GitHub CLI](https://cli.github.com) adds pull requests and checks. The release notes give the zip's SHA-256: compare it with `Get-FileHash` before you unzip. The file is not signed, so SmartScreen may warn on the first run: **More info**, then **Run anyway**.
 
