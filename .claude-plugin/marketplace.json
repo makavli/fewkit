@@ -10,7 +10,7 @@
     {
       "name": "codekickoff",
       "description": "First setup for Claude Code newcomers, sized to your plan. One skill, no hooks, nothing collected.",
-      "source": { "source": "github", "repo": "makavli/codekickoff", "ref": "v1.0.9", "sha": "9b5f57a194dca0ca844eddfbc79a22c081258654" },
+      "source": { "source": "github", "repo": "makavli/codekickoff", "ref": "v1.1.0", "sha": "ca00e6392545487dbdb3ef8cd54807873c294853" },
       "category": "productivity"
     },
     {
