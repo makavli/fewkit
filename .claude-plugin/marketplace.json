@@ -28,7 +28,7 @@
     {
       "name": "fullburn",
       "description": "A swarm against a deadline: many helper agents at once, each in its own git worktree, merged and checked in waves, with a usage watch. Spends usage very fast, on purpose; Pro runs it lite. Two skills, no hooks, nothing collected.",
-      "source": { "source": "github", "repo": "makavli/fullburn", "ref": "v1.0.0", "sha": "cb29d22fe392b41a76fdd1d759227fe6737ac863" },
+      "source": { "source": "github", "repo": "makavli/fullburn", "ref": "v1.1.0", "sha": "9f72e63e86a9ed66e29941e36d65f96c2d395cf0" },
       "category": "productivity"
     }
   ]
