@@ -1,7 +1,7 @@
 {
   "$schema": "https://anthropic.com/claude-code/marketplace.schema.json",
   "name": "fewkit",
-  "description": "Fewkit: the lean Claude Code bundle. CodeKickoff on day one, Fewturns every day after, Wavecheck before a release.",
+  "description": "Fewkit: the lean Claude Code bundle. CodeKickoff on day one, Fewturns every day after, Wavecheck before a release, Fullburn against a deadline.",
   "owner": {
     "name": "makavli",
     "url": "https://github.com/makavli"
@@ -24,6 +24,12 @@
       "description": "A deep check in waves before a release: read-only helpers, a critic after each wave, two verifiers per lead. Spends requests on purpose; lite for smaller plans. One skill, no hooks, nothing collected.",
       "source": "./plugins/wavecheck",
       "category": "development"
+    },
+    {
+      "name": "fullburn",
+      "description": "A swarm against a deadline: many helper agents at once, each in its own git worktree, merged and checked in waves, with a usage watch. Spends usage very fast, on purpose; Pro runs it lite. Two skills, no hooks, nothing collected.",
+      "source": { "source": "github", "repo": "makavli/fullburn", "ref": "v1.0.0", "sha": "cb29d22fe392b41a76fdd1d759227fe6737ac863" },
+      "category": "productivity"
     }
   ]
 }
