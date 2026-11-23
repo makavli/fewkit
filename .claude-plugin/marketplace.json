@@ -16,7 +16,7 @@
     {
       "name": "fewturns",
       "description": "Trims what every Claude Code request carries and the requests a task takes. One skill, no hooks, nothing collected.",
-      "source": { "source": "github", "repo": "makavli/fewturns", "ref": "v1.6.0", "sha": "54998c01b41cc61fb3da7edaf88f7e551b91db51" },
+      "source": { "source": "github", "repo": "makavli/fewturns", "ref": "v1.7.0", "sha": "1fbe008d8c9a3832ca3ed73b43c6a9535e84cf34" },
       "category": "productivity"
     },
     {
